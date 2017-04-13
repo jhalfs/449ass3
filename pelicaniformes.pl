@@ -270,24 +270,24 @@ isa(A,B) :-
     
 %RangesTo predicate, only common names if A is varible
 rangesTo(A,B) :- atom(A), (order(A);family(A);genus(A)),
-	isa(C,A), hasCompoundName(_,S,C), species(S), rangesTo(C,B).
+	isaStrict(C,A), hasCompoundName(_,S,C), species(S), rangesTo(C,B).
 		
 %Habitat predicate, more than one result possible if A is a group
 habitat(A,B) :- atom(A), (order(A);family(A);genus(A)),
-  	isa(C,A), hasCompoundName(_,S,C), species(S), habitat(C,B).
+  	isaStrict(C,A), hasCompoundName(_,S,C), species(S), habitat(C,B).
 		
 %Food predicate, more than one result possible if A is a group		
 food(A,B) :- atom(A), (order(A);family(A);genus(A)),
-    	isa(C,A), hasCompoundName(_,S,C), species(S), food(C,B).
+    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), food(C,B).
 		
 %Nesting predicate, more than one result possible if A is a group		
 nesting(A,B) :- atom(A), (order(A);family(A);genus(A)),
-    	isa(C,A), hasCompoundName(_,S,C), species(S), nesting(C,B).
+    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), nesting(C,B).
 		
 %Behaviour predicate, more than one result possible if A is a group
 behaviour(A,B) :- atom(A), (order(A);family(A);genus(A)),
-    	isa(C,A), hasCompoundName(_,S,C), species(S), behaviour(C,B).
+    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), behaviour(C,B).
 		
 %Conservation predicate, more than one result possible if A is a group
 conservation(A,B) :- atom(A), (order(A);family(A);genus(A)),
-    	isa(C,A), hasCompoundName(_,S,C), species(S), conservation(C,B).
+    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), conservation(C,B).
