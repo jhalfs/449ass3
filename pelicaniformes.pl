@@ -224,17 +224,17 @@ behavior(platalea_ajaja,				      probing).
 
 %Conservation information:
 %Conservation type: lc, nt
-conservation(pelecanus_erythrorhynchos,	lc).
-conservation(pelecanus_occidentalis,	lc).
+conservation(pelecanus_erythrorhynchos,		lc).
+conservation(pelecanus_occidentalis,		lc).
 conservation(botaurus_lentiginosus,		lc).
 conservation(ixobrychus_exilis,			lc).
 conservation(ardea_herodias,			lc).
-conservation(ardea_alba,				lc).
-conservation(egretta_thula,				lc).
+conservation(ardea_alba,			lc).
+conservation(egretta_thula,			lc).
 conservation(egretta_caerulea,			lc).
 conservation(egretta_tricolor,			lc).
 conservation(egretta_rufescens,			nt).
-conservation(bubulcus_ibis,				lc).
+conservation(bubulcus_ibis,			lc).
 conservation(butorides_virescens,		lc).
 conservation(nycticorax_nycticorax,		lc).
 conservation(nyctanassa_violacea,		lc).
