@@ -81,7 +81,6 @@ hasParent(threskiornithdae,pelecaniformes).
 		hasParent(ajaja,platalea).
 
 
-
 %Common name with desired indentation
 commonName(pelecanus,pelican).
 	commonName(erythrorhynchos,americanWhitePelican).
@@ -241,3 +240,12 @@ conservation(plegadis_falcinellus,		lc).
 conservation(plegadis_chihi,			lc).
 conservation(platalea_ajaja,			lc).
 conservation(egretta_rufescens,			nt).
+
+
+%Predicates used to query the database:
+
+hasSciName(C, N) :-
+	hasCompoundName(G, S, N), hasCommonName(S, C);
+    order(N), hasCommonName(N, C);
+    family(N), hasCommonName(N, C);
+    genus(N), hasCommonName(N, C).
