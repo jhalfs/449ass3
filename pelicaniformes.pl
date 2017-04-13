@@ -1,3 +1,17 @@
+/*
+CPSC 499 Prolog Assignment
+April 14, 2017
+
+Group Members:
+	Kisoon Kim
+	Julien Halford
+	
+Project:
+	Creating a database of information about the order Pelicaniforms, which can be queried
+	in many different ways in order to yield scientific information such as: names, prey, and 
+	many others. 
+*/
+
 %There is only 1 order
 order(pelecaniformes).
 
