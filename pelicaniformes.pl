@@ -95,38 +95,98 @@ hasParent(threskiornithdae,pelecaniformes).
 		hasParent(ajaja,platalea).
 
 
-%Common name with desired indentation
-commonName(pelecanus,pelican).
-	commonName(erythrorhynchos,americanWhitePelican).
-	commonName(occidentalis,brownPelican).
-commonName(botaurus,bittern).
-	commonName(lentiginosus,americanBittern).
-commonName(ixobrychus,bittern).
-	commonName(exilis,leastBittern).
-commonName(ardea,heron).
-	commonName(herodias,greatBlueHeron).
-	commonName(alba,greatEgret).
-commonName(egretta,heron).
-commonName(egretta,egret).
-	commonName(thula,snowyEgret).
-	commonName(caerulea,littleBlueHeron).
-	commonName(tricolor,tricoloredHeron).
-	commonName(rufescens,reddishEgret).
-commonName(bubulcus,egret).
-	commonName(ibis,cattleEgret).
-commonName(butorides,heron).
-	commonName(virescens,greenHeron).
-commonName(nycticorax,nightHeron).
-	commonName(nycticorax,blackCrownedNightHeron).
-commonName(nyctanassa,nightHeron).
-	commonName(violacea,yellowCrownedNightHeron).
-commonName(eudocimus,ibis).
-	commonName(albus,whiteIbis).
-commonName(plegadis,ibis).
-	commonName(falcinellus,glossyIbis).
-	commonName(chihi,whiteFacedIbis).
-commonName(platalea,spoonbill).
-	commonName(ajaja,roseateSpoonbill).
+hasParent2(pelecanidae,pelecaniformes).
+	hasParent2(pelecanus,pelecanidae).
+		hasParent2(pelecanus_erythrorhynchos,pelecanus).
+		hasParent2(pelecanus_occidentalis,pelecanus).
+hasParent2(ardeidae,pelecaniformes).
+	hasParent2(botaurus,ardeidae).
+		hasParent2(botaurus_lentiginosus,botaurus).
+	hasParent2(ixobrychus,ardeidae).
+		hasParent2(ixobrychus_exilis,ixobrychus).
+	hasParent2(ardea,ardeidae).
+		hasParent2(ardea_herodias,ardea).
+		hasParent2(ardea_alba,ardea).
+	hasParent2(egretta,ardeidae).
+		hasParent2(egretta_thula,egretta).
+		hasParent2(egretta_caerulea,egretta).
+		hasParent2(egretta_tricolor,egretta).
+		hasParent2(egretta_rufescens,egretta).
+	hasParent2(bubulcus,ardeidae).
+		hasParent2(bubulcus_ibis,bubulcus).
+	hasParent2(butorides,ardeidae).
+		hasParent2(butorides_virescens,butorides).
+	hasParent2(nycticorax,ardeidae).
+		hasParent2(nycticorax_nycticorax,nycticorax).
+	hasParent2(nyctanassa,ardeidae).
+		hasParent2(nyctanassa_violacea,nyctanassa).
+hasParent2(threskiornithdae,pelecaniformes).
+	hasParent2(eudocimus,threskiornithdae).
+		hasParent2(eudocimus_albus,eudocimus).
+	hasParent2(plegadis,threskiornithdae).
+		hasParent2(plegadis_falcinellus,plegadis).
+		hasParent2(plegadis_chihi,plegadis).
+	hasParent2(platalea,threskiornithdae).
+		hasParent2(platalea_ajaja,platalea).
+
+
+
+hasCommonName(pelecanus,pelican).
+	hasCommonName(pelecanus_erythrorhynchos,americanWhitePelican).
+	hasCommonName(pelecanus_occidentalis,brownPelican).
+hasCommonName(botaurus,bittern).
+	hasCommonName(botaurus_lentiginosus,americanBittern).
+hasCommonName(ixobrychus,bittern).
+	hasCommonName(ixobrychus_exilis,leastBittern).
+hasCommonName(ardea,heron).
+	hasCommonName(ardea_herodias,greatBlueHeron).
+	hasCommonName(ardea_alba,greatEgret).
+hasCommonName(egretta,heron).
+hasCommonName(egretta,egret).
+	hasCommonName(egretta_thula,snowyEgret).
+	hasCommonName(egretta_caerulea,littleBlueHeron).
+	hasCommonName(egretta_tricolor,tricoloredHeron).
+	hasCommonName(egretta_rufescens,reddishEgret).
+hasCommonName(bubulcus,egret).
+	hasCommonName(bubulcus_ibis,cattleEgret).
+hasCommonName(butorides,heron).
+	hasCommonName(butorides_virescens,greenHeron).
+hasCommonName(nycticorax,nightHeron).
+	hasCommonName(nycticorax_nycticorax,blackCrownedNightHeron).
+hasCommonName(nyctanassa,nightHeron).
+	hasCommonName(nyctanassa_violacea,yellowCrownedNightHeron).
+hasCommonName(eudocimus,ibis).
+	hasCommonName(eudocimus_albus,whiteIbis).
+hasCommonName(plegadis,ibis).
+	hasCommonName(plegadis_falcinellus,glossyIbis).
+	hasCommonName(plegadis_chihi,whiteFacedIbis).
+hasCommonName(platalea,spoonbill).
+	hasCommonName(platalea_ajaja,roseateSpoonbill).
+
+
+hasCommonName(pelecanus, erythrorhynchos, americanWhitePelican).
+hasCommonName(pelecanus, occidentalis, brownPelican).
+hasCommonName(botaurus, lentiginosus, americanBittern).
+hasCommonName(ixobrychus, exilis, leastBittern).
+hasCommonName(ardea, herodias, greatBlueHeron).
+hasCommonName(ardea, alba, greatEgret).
+hasCommonName(egretta, thula, snowyEgret).
+hasCommonName(egretta, caerulea, littleBlueHeron).
+hasCommonName(egretta, tricolor, tricoloredHeron).
+hasCommonName(egretta, rufescens, reddishEgret).
+hasCommonName(bubulcus, ibis, cattleEgret).
+hasCommonName(butorides, virescens, greenHeron).
+hasCommonName(nycticorax, nycticorax, blackCrownedNightHeron).
+hasCommonName(nyctanassa, violacea, yellowCrownedNightHeron).
+hasCommonName(eudocimus, albus, whiteIbis).
+hasCommonName(plegadis, falcinellus, glossyIbis).
+hasCommonName(plegadis, chihi, whiteFacedIbis).
+hasCommonName(platalea, ajaja, roseateSpoonbill).
+
+hasSciName(C, N) :- hasCommonName(N, C), hasCompoundName(D, E, N), !.
+hasSciName(C, N) :- hasCommonName(N, C), order(N); family(N); genus(N).
+
+hasCompoundName(G, S, N) :- hasCommonName(N, D), hasCommonName(G, S, D), \+(S = N), \+(G = N).
 
 
 
