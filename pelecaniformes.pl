@@ -1,50 +1,43 @@
-%There is only 1 order
+% Stated as facts
 order(pelecaniformes).
 
-
-%There is only 3 families
 family(pelecanidae).
 family(ardeidae).
 family(threskiornithdae).
 
-
-%12 Different genus
-genus(ardea).
-genus(egretta).
 genus(pelecanus).
 genus(botaurus).
 genus(ixobrychus).
-genus(nycticorax).
-genus(nyctanassa).
+genus(ardea).
+genus(egretta).
 genus(bubulcus).
 genus(butorides).
+genus(nycticorax).
+genus(nyctanassa).
 genus(eudocimus).
 genus(plegadis).
 genus(platalea).
 
-
-%There are 18 different species
+species(erythrorhynchos).
 species(occidentalis).
 species(lentiginosus).
-species(erythrorhynchos).
-species(caerulea).
-species(tricolor).
-species(nycticorax).
-species(violacea).
+species(exilis).
+species(herodias).
 species(alba).
 species(thula).
+species(caerulea).
+species(tricolor).
 species(rufescens).
 species(ibis).
 species(virescens).
+species(nycticorax).
+species(violacea).
 species(albus).
 species(falcinellus).
 species(chihi).
-species(exilis).
-species(herodias).
 species(ajaja).
 
 
-%Raw version of hasParent information
 hasParent(pelecanidae,pelecaniformes).
 	hasParent(pelecanus,pelecanidae).
 		hasParent(erythrorhynchos,pelecanus).
@@ -81,7 +74,6 @@ hasParent(threskiornithdae,pelecaniformes).
 
 
 		
-%More refined hasParent, works with compound names	
 hasParent2(pelecanidae,pelecaniformes).
 	hasParent2(pelecanus,pelecanidae).
 		hasParent2(pelecanus_erythrorhynchos,pelecanus).
@@ -116,7 +108,8 @@ hasParent2(threskiornithdae,pelecaniformes).
 	hasParent2(platalea,threskiornithdae).
 		hasParent2(platalea_ajaja,platalea).
 		
-%Common names with proper indentation
+
+
 hasCommonName(pelecanus,pelican).
 	hasCommonName(pelecanus_erythrorhynchos,americanWhitePelican).
 	hasCommonName(pelecanus_occidentalis,brownPelican).
@@ -149,7 +142,7 @@ hasCommonName(plegadis,ibis).
 hasCommonName(platalea,spoonbill).
 	hasCommonName(platalea_ajaja,roseateSpoonbill).
 
-%Common Names
+
 hasCommonName(pelecanus, erythrorhynchos, americanWhitePelican).
 hasCommonName(pelecanus, occidentalis, brownPelican).
 hasCommonName(botaurus, lentiginosus, americanBittern).
@@ -169,14 +162,45 @@ hasCommonName(plegadis, falcinellus, glossyIbis).
 hasCommonName(plegadis, chihi, whiteFacedIbis).
 hasCommonName(platalea, ajaja, roseateSpoonbill).
 
-hasSciName(C, N) :- hasCommonName(N, C), hasCompoundName(D, E, N), !.
-hasSciName(C, N) :- hasCommonName(N, C), order(N); family(N); genus(N).
 
-hasCompoundName(G, S, N) :- hasCommonName(N, D), hasCommonName(G, S, D), \+(S = N), \+(G = N).
+hasSciName(C, N):- hasCommonName(N,C).
 
-isaStrict(A, B) :-
-    hasParent(B, A);
-    hasParent(A, B).
+hasCompoundName(G, S, N):- genus(G), species(S), atom_concat(G,'_',A), atom_concat(A,S,N).
+ 
+ 
+
+isaStrict(A, A) :- 	order(A);
+    				family(A);
+    				genus(A);
+    				hasCompoundName(_,_,A).
+isaStrict(A, B) :-  hasParent2(A,B);
+					(hasParent2(A,C), isaStrict(C,B)).
+                    
+                    
+
+isa(A,B) :- atom(A), atom(B), isaStrict(A,B);
+            atom(A), atom(B), isaStrict(C,B), hasSciName(A,C);
+            atom(A), atom(B), isaStrict(A,D), hasSciName(B,D);
+            atom(A), atom(B), isaStrict(C,D), hasSciName(A,C), hasSciName(B,D);
+            atom(A), isaStrict(C,B), hasSciName(A,C);
+            atom(B), isaStrict(A,D), hasSciName(B,D);
+            atom(A), var(B), isaStrict(A,B);
+            atom(B), var(A), isaStrict(A,B);
+            var(A), var(B), isaStrict(A,B).
+            
+synonym(A,B) :- hasCommonName(A,B), A\=B; 
+                hasCommonName(B,A), A\=B; 
+                hasCommonName(C,A),hasCommonName(C,B), A\=B.
+
+                
+                
+countSpecies(A, N) :- \+order(A),\+family(A),\+genus(A), N=0.
+countSpecies(A, N) :- findall(B, isChild(A,B),C), sort(C,D), length(D,N).
+
+
+ 
+isChild(A,B) :- isaStrict(B,A), hasCompoundName(G,S,B).
+
 
 
 %Range information
@@ -193,96 +217,115 @@ rangesTo(ardea_alba, canada).
 rangesTo(bubulcus_ibis, canada).
 rangesTo(butorides_virescens, canada).
 
-
+%rangesTo predicate.
+rangesTo(A,B) :- atom(A), (order(A);family(A);genus(A)),
+	species(D),hasCompoundName(_,D,C),isaStrict(C,A),rangesTo(C,B).
+    
 %Habitat information
 %Possible habitats: lakePond, ocean,  marsh. 
-habitat(pelecanus_erythrorhynchos,	  lakePond).
-habitat(pelecanus_occidentalis,			  ocean).
-habitat(botaurus_lentiginosus,			  marsh).
-habitat(ixobrychus_exilis,				    marsh).
-habitat(ardea_herodias,					      marsh).
-habitat(ardea_alba,						        marsh).
-habitat(egretta_thula,					      marsh).
-habitat(egretta_caerulea,				      marsh).
-habitat(egretta_tricolor,				      marsh).
-habitat(egretta_rufescens,				    marsh).
-habitat(bubulcus_ibis,					      marsh).
-habitat(butorides_virescens,			    marsh).
-habitat(nycticorax_nycticorax,		   	marsh).
-habitat(nyctanassa_violacea,			    marsh).
-habitat(eudocimus_albus,				      marsh).
-habitat(plegadis_falcinellus,			    marsh).
-habitat(plegadis_chihi,					      marsh).
-habitat(platalea_ajaja,					      marsh).
+habitat(pelecanus_erythrorhynchos, lakePond).
+habitat(pelecanus_occidentalis, ocean).
+habitat(botaurus_lentiginosus, marsh).
+habitat(ixobrychus_exilis, marsh).
+habitat(ardea_herodias, marsh).
+habitat(ardea_alba, marsh).
+habitat(egretta_thula, marsh).
+habitat(egretta_caerulea, marsh).
+habitat(egretta_tricolor, marsh).
+habitat(egretta_rufescens, marsh).
+habitat(bubulcus_ibis, marsh).
+habitat(butorides_virescens, marsh).
+habitat(nycticorax_nycticorax, marsh).
+habitat(nyctanassa_violacea, marsh).
+habitat(eudocimus_albus, marsh).
+habitat(plegadis_falcinellus, marsh).
+habitat(plegadis_chihi, marsh).
+habitat(platalea_ajaja, marsh).
+
+
+%habitat predicate.
+habitat(A,B) :- atom(A), (order(A);family(A);genus(A)),
+	species(D),hasCompoundName(_,D,C),isaStrict(C,A),habitat(C,B).
 
 
 %Food information
 %Possible foods: fish, insects
-food(pelecanus_erythrorhynchos,			fish).
-food(pelecanus_occidentalis,			  fish).
-food(botaurus_lentiginosus,				  fish).
-food(ixobrychus_exilis,					    fish).
-food(ardea_herodias,					      fish).
-food(ardea_alba,						        fish).
-food(egretta_thula,						      fish).
-food(egretta_caerulea,					    fish).
-food(egretta_tricolor,					    fish).
-food(egretta_rufescens,					    fish).
-food(bubulcus_ibis,						      insects).
-food(butorides_virescens,				    fish).
-food(nycticorax_nycticorax,				  fish).
-food(nyctanassa_violacea,				    insects).
-food(eudocimus_albus,					      insects).
-food(plegadis_falcinellus,				  insects).
-food(plegadis_chihi,					      insects).
-food(platalea_ajaja,					      fish).
+food(pelecanus_erythrorhynchos, fish).
+food(pelecanus_occidentalis, fish).
+food(botaurus_lentiginosus, fish).
+food(ixobrychus_exilis, fish).
+food(ardea_herodias, fish).
+food(ardea_alba, fish).
+food(egretta_thula, fish).
+food(egretta_caerulea, fish).
+food(egretta_tricolor, fish).
+food(egretta_rufescens, fish).
+food(bubulcus_ibis, insects).
+food(butorides_virescens, fish).
+food(nycticorax_nycticorax, fish).
+food(nyctanassa_violacea, insects).
+food(eudocimus_albus, insects).
+food(plegadis_falcinellus, insects).
+food(plegadis_chihi, insects).
+food(platalea_ajaja, fish).
 
+
+%food predicate.
+food(A,B) :- atom(A), (order(A);family(A);genus(A)),
+	species(D),hasCompoundName(_,D,C),isaStrict(C,A),food(C,B).
 
 %Nesting information
 %Possible nesting locations: ground, tree
-nesting(pelecanus_erythrorhynchos,		ground).
-nesting(pelecanus_occidentalis,			  tree).
-nesting(botaurus_lentiginosus,			  ground).
-nesting(ixobrychus_exilis,				    ground).
-nesting(ardea_herodias,					      tree).
-nesting(ardea_alba,						        tree).
-nesting(egretta_thula,					      tree).
-nesting(egretta_caerulea,				      tree).
-nesting(egretta_tricolor,				      tree).
-nesting(egretta_rufescens,				    tree).
-nesting(bubulcus_ibis,					      tree).
-nesting(butorides_virescens,			    tree).
-nesting(nycticorax_nycticorax,		  	tree).
-nesting(nyctanassa_violacea,			    tree).
-nesting(eudocimus_albus,				      tree).
-nesting(plegadis_falcinellus,			    ground).
-nesting(plegadis_chihi,					      ground).
-nesting(platalea_ajaja,					      tree).
+nesting(pelecanus_erythrorhynchos, ground).
+nesting(pelecanus_occidentalis, tree).
+nesting(botaurus_lentiginosus, ground).
+nesting(ixobrychus_exilis, ground).
+nesting(ardea_herodias, tree).
+nesting(ardea_alba, tree).
+nesting(egretta_thula, tree).
+nesting(egretta_caerulea, tree).
+nesting(egretta_tricolor, tree).
+nesting(egretta_rufescens, tree).
+nesting(bubulcus_ibis, tree).
+nesting(butorides_virescens, tree).
+nesting(nycticorax_nycticorax, tree).
+nesting(nyctanassa_violacea, tree).
+nesting(eudocimus_albus, tree).
+nesting(plegadis_falcinellus, ground).
+nesting(plegadis_chihi, ground).
+nesting(platalea_ajaja, tree).
 
+
+%nesting predicate.
+nesting(A,B) :- atom(A),(order(A);family(A);genus(A)),
+	species(D),hasCompoundName(_,D,C),isaStrict(C,A),nesting(C,B).
 
 
 %Behaviour information
 %Possible behaviours: surfaceDive, aerialDive, stalking, groundForager, probing
-behavior(pelecanus_erythrorhynchos,		surfaceDive).
-behavior(pelecanus_occidentalis,		  aerialDive).
-behavior(botaurus_lentiginosus,			  stalking).
-behavior(ixobrychus_exilis,				    stalking).
-behavior(ardea_herodias,				      stalking).
-behavior(ardea_alba,					        stalking).
-behavior(egretta_thula,					      stalking).
-behavior(egretta_caerulea,				    stalking).
-behavior(egretta_tricolor,				    stalking).
-behavior(egretta_rufescens,				    stalking).
-behavior(bubulcus_ibis,					      groundForager).
-behavior(butorides_virescens,			    stalking).
-behavior(nycticorax_nycticorax,			  stalking).
-behavior(nyctanassa_violacea,			    stalking).
-behavior(eudocimus_albus,				      probing).
-behavior(plegadis_falcinellus,			  groundForager).
-behavior(plegadis_chihi,				      probing).
-behavior(platalea_ajaja,				      probing).
+behavior(pelecanus_erythrorhynchos, surfaceDive).
+behavior(pelecanus_occidentalis, aerialDive).
+behavior(botaurus_lentiginosus, stalking).
+behavior(ixobrychus_exilis, stalking).
+behavior(ardea_herodias, stalking).
+behavior(ardea_alba, stalking).
+behavior(egretta_thula, stalking).
+behavior(egretta_caerulea, stalking).
+behavior(egretta_tricolor, stalking).
+behavior(egretta_rufescens, stalking).
+behavior(bubulcus_ibis, groundForager).
+behavior(butorides_virescens, stalking).
+behavior(nycticorax_nycticorax, stalking).
+behavior(nyctanassa_violacea, stalking).
+behavior(eudocimus_albus, probing).
+behavior(plegadis_falcinellus, groundForager).
+behavior(plegadis_chihi, probing).
+behavior(platalea_ajaja, probing).
 
 
+%behavior predicate.
+behavior(A,B) :- atom(A),(order(A);family(A);genus(A)),
+	species(D),hasCompoundName(_,D,C),isaStrict(C,A),behavior(C,B).
 
 %Conservation information:
 %Conservation type: lc, nt
@@ -304,3 +347,7 @@ conservation(eudocimus_albus,			lc).
 conservation(plegadis_falcinellus,		lc).
 conservation(plegadis_chihi,			lc).
 conservation(platalea_ajaja,			lc).
+
+%conservation predicate.
+conservation(A,B) :- atom(A), (order(A);family(A);genus(A)),
+    species(D),hasCompoundName(_,D,C),isaStrict(C,A),conservation(C,B).
