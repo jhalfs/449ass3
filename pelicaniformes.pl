@@ -132,17 +132,17 @@ commonName(platalea,spoonbill).
 
 %Range information
 %If the bird is in Alberta, then it is also in Canada.
-rangesTo(botaurus_lentiginosus,canada).
-rangesTo(botaurus_lentiginosus,alberta).
-rangesTo(nycticorax_nycticorax, canada).
-rangesTo(nycticorax_nycticorax, alberta).
-rangesTo(ardea_herodias, canada).
-rangesTo(ardea_herodias, alberta).
-rangesTo(pelecanus_erythrorhynchos,canada).
-rangesTo(pelecanus_erythrorhynchos,alberta).
-rangesTo(ardea_alba, canada).
-rangesTo(bubulcus_ibis, canada).
-rangesTo(butorides_virescens, canada).
+rangesTo(botaurus_lentiginosus,		canada).
+rangesTo(botaurus_lentiginosus,		alberta).
+rangesTo(nycticorax_nycticorax, 	canada).
+rangesTo(nycticorax_nycticorax, 	alberta).
+rangesTo(ardea_herodias, 		canada).
+rangesTo(ardea_herodias, 		alberta).
+rangesTo(pelecanus_erythrorhynchos,	canada).
+rangesTo(pelecanus_erythrorhynchos,	alberta).
+rangesTo(ardea_alba, 			canada).
+rangesTo(bubulcus_ibis, 		canada).
+rangesTo(butorides_virescens, 		canada).
 
 
 %Habitat information
