@@ -169,31 +169,10 @@ hasCommonName(plegadis, falcinellus, glossyIbis).
 hasCommonName(plegadis, chihi, whiteFacedIbis).
 hasCommonName(platalea, ajaja, roseateSpoonbill).
 
-hasSciName(C, N) :-
-	hasCompoundName(G, S, N), hasCommonName(S, C);
-    order(N), hasCommonName(N, C);
-    family(N), hasCommonName(N, C);
-    genus(N), hasCommonName(N, C).
-	
+hasSciName(C, N) :- hasCommonName(N, C), hasCompoundName(D, E, N), !.
+hasSciName(C, N) :- hasCommonName(N, C), order(N); family(N); genus(N).
 
-hasCompoundName(pelecanus, erythrorhynchos, pelecanus_erythrorhynchos).
-hasCompoundName(pelecanus, occidentalis, pelecanus_occidentalis).
-hasCompoundName(botaurus, lentiginosus, botaurus_lentiginosus).
-hasCompoundName(ixobrychus, exilis, ixobrychus_exilis).
-hasCompoundName(ardea, herodias, ardea_herodias).
-hasCompoundName(ardea, alba, ardea_alba).
-hasCompoundName(egretta, thula, egretta_thula).
-hasCompoundName(egretta, caerulea, egretta_caerulea).
-hasCompoundName(egretta, tricolor, egretta_tricolor).
-hasCompoundName(egretta, rufescens, egretta_rufescens).
-hasCompoundName(bubulcus, ibis, bubulcus_ibis).
-hasCompoundName(butorides, virescens, butorides_virescens).
-hasCompoundName(nycticorax, nycticorax, nycticorax_nycticorax).
-hasCompoundName(nyctanassa, violacea, nyctanassa_violacea).
-hasCompoundName(eudocimus, albus, eudocimus_albus).
-hasCompoundName(plegadis, falcinellus, plegadis_falcinellus).
-hasCompoundName(plegadis, chihi, plegadis_chihi).
-hasCompoundName(platalea, ajaja, platalea_ajaja)	
+hasCompoundName(G, S, N) :- hasCommonName(N, D), hasCommonName(G, S, D), \+(S = N), \+(G = N).
 
 isaStrict(A, B) :-
     hasParent(B, A);
