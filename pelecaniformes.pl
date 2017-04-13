@@ -44,7 +44,7 @@ species(herodias).
 species(ajaja).
 
 
-
+%Raw version of hasParent information
 hasParent(pelecanidae,pelecaniformes).
 	hasParent(pelecanus,pelecanidae).
 		hasParent(erythrorhynchos,pelecanus).
@@ -81,7 +81,7 @@ hasParent(threskiornithdae,pelecaniformes).
 
 
 		
-		
+%More refined hasParent, works with compound names	
 hasParent2(pelecanidae,pelecaniformes).
 	hasParent2(pelecanus,pelecanidae).
 		hasParent2(pelecanus_erythrorhynchos,pelecanus).
@@ -116,7 +116,7 @@ hasParent2(threskiornithdae,pelecaniformes).
 	hasParent2(platalea,threskiornithdae).
 		hasParent2(platalea_ajaja,platalea).
 		
-
+%Common names with proper indentation
 hasCommonName(pelecanus,pelican).
 	hasCommonName(pelecanus_erythrorhynchos,americanWhitePelican).
 	hasCommonName(pelecanus_occidentalis,brownPelican).
@@ -149,7 +149,7 @@ hasCommonName(plegadis,ibis).
 hasCommonName(platalea,spoonbill).
 	hasCommonName(platalea_ajaja,roseateSpoonbill).
 
-
+%Common Names
 hasCommonName(pelecanus, erythrorhynchos, americanWhitePelican).
 hasCommonName(pelecanus, occidentalis, brownPelican).
 hasCommonName(botaurus, lentiginosus, americanBittern).
