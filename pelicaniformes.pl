@@ -143,7 +143,11 @@ rangesTo(pelecanus_erythrorhynchos,	alberta).
 rangesTo(ardea_alba, 			canada).
 rangesTo(bubulcus_ibis, 		canada).
 rangesTo(butorides_virescens, 		canada).
-
+  
+%RangesTo predicate, only common names if A is varible
+rangesTo(A,B) :- atom(A), (order(A);family(A);genus(A)),
+	isaStrict(C,A), hasCompoundName(_,S,C), species(S), rangesTo(C,B).
+	
 
 %Habitat information
 %Possible habitats: lakePond, ocean,  marsh. 
@@ -166,6 +170,10 @@ habitat(plegadis_falcinellus,		  marsh).
 habitat(plegadis_chihi,		          marsh).
 habitat(platalea_ajaja,		          marsh).
 
+%Habitat predicate, more than one result possible if A is a group
+habitat(A,B) :- atom(A), (order(A);family(A);genus(A)),
+  	isaStrict(C,A), hasCompoundName(_,S,C), species(S), habitat(C,B).
+	
 
 %Food information
 %Possible foods: fish, insects
@@ -187,7 +195,11 @@ food(nyctanassa_violacea,		insects).
 food(eudocimus_albus,			insects).
 food(plegadis_falcinellus,		insects).
 food(plegadis_chihi,			insects).
-
+		
+%Food predicate, more than one result possible if A is a group		
+food(A,B) :- atom(A), (order(A);family(A);genus(A)),
+    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), food(C,B).
+	
 
 %Nesting information
 %Possible nesting locations: ground, tree
@@ -209,7 +221,10 @@ nesting(nycticorax_nycticorax,		tree).
 nesting(nyctanassa_violacea,		tree).
 nesting(eudocimus_albus,		tree).
 nesting(platalea_ajaja,			tree).
-
+	
+%Nesting predicate, more than one result possible if A is a group		
+nesting(A,B) :- atom(A), (order(A);family(A);genus(A)),
+    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), nesting(C,B).
 
 
 %Behaviour information
@@ -232,7 +247,11 @@ behavior(plegadis_chihi,		probing).
 behavior(platalea_ajaja,		probing).
 behavior(bubulcus_ibis,			groundForager).
 behavior(plegadis_falcinellus,		groundForager).
-
+		
+%Behaviour predicate, more than one result possible if A is a group
+behaviour(A,B) :- atom(A), (order(A);family(A);genus(A)),
+    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), behaviour(C,B).
+	
 
 %Conservation information:
 %Conservation type: lc, nt
@@ -254,40 +273,9 @@ conservation(plegadis_falcinellus,		lc).
 conservation(plegadis_chihi,			lc).
 conservation(platalea_ajaja,			lc).
 conservation(egretta_rufescens,			nt).
-
-
-%Predicates used to query the database:
-
-hasSciName(C, N) :-
-	hasCompoundName(G, S, N), hasCommonName(S, C);
-    order(N), hasCommonName(N, C);
-    family(N), hasCommonName(N, C);
-    genus(N), hasCommonName(N, C).
-    
-    
-isa(A,B) :-
-    
-    
-%RangesTo predicate, only common names if A is varible
-rangesTo(A,B) :- atom(A), (order(A);family(A);genus(A)),
-	isaStrict(C,A), hasCompoundName(_,S,C), species(S), rangesTo(C,B).
-		
-%Habitat predicate, more than one result possible if A is a group
-habitat(A,B) :- atom(A), (order(A);family(A);genus(A)),
-  	isaStrict(C,A), hasCompoundName(_,S,C), species(S), habitat(C,B).
-		
-%Food predicate, more than one result possible if A is a group		
-food(A,B) :- atom(A), (order(A);family(A);genus(A)),
-    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), food(C,B).
-		
-%Nesting predicate, more than one result possible if A is a group		
-nesting(A,B) :- atom(A), (order(A);family(A);genus(A)),
-    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), nesting(C,B).
-		
-%Behaviour predicate, more than one result possible if A is a group
-behaviour(A,B) :- atom(A), (order(A);family(A);genus(A)),
-    	isaStrict(C,A), hasCompoundName(_,S,C), species(S), behaviour(C,B).
 		
 %Conservation predicate, more than one result possible if A is a group
 conservation(A,B) :- atom(A), (order(A);family(A);genus(A)),
     	isaStrict(C,A), hasCompoundName(_,S,C), species(S), conservation(C,B).
+
+		
