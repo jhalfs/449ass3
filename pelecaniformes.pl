@@ -1,10 +1,31 @@
+/*
+Computer Science 449
+Assignment 5 - Prolog
+
+April 13, 2017
+
+Group Members:
+	Kisoon Kim
+	Julien Halford
+	
+Project:
+	Creating a database of information about the order Pelicaniforms, which can be queried
+	in many different ways in order to yield scientific information such as: names, prey, and 
+	many others. 
+*/
+
+
 % Stated as facts
+
+%Only 1 order
 order(pelecaniformes).
 
+%3 families within the order
 family(pelecanidae).
 family(ardeidae).
 family(threskiornithdae).
 
+%12 genus within all families
 genus(pelecanus).
 genus(botaurus).
 genus(ixobrychus).
@@ -18,6 +39,7 @@ genus(eudocimus).
 genus(plegadis).
 genus(platalea).
 
+%18 species within the genus
 species(erythrorhynchos).
 species(occidentalis).
 species(lentiginosus).
@@ -37,7 +59,7 @@ species(falcinellus).
 species(chihi).
 species(ajaja).
 
-
+%HasParent information, with specified indentation
 hasParent(pelecanidae,pelecaniformes).
 	hasParent(pelecanus,pelecanidae).
 		hasParent(erythrorhynchos,pelecanus).
@@ -73,7 +95,7 @@ hasParent(threskiornithdae,pelecaniformes).
 		hasParent(ajaja,platalea).
 
 
-		
+%Secondary hasParent with specified indentation
 hasParent2(pelecanidae,pelecaniformes).
 	hasParent2(pelecanus,pelecanidae).
 		hasParent2(pelecanus_erythrorhynchos,pelecanus).
@@ -109,7 +131,7 @@ hasParent2(threskiornithdae,pelecaniformes).
 		hasParent2(platalea_ajaja,platalea).
 		
 
-
+%commonName with proper indentation
 hasCommonName(pelecanus,pelican).
 	hasCommonName(pelecanus_erythrorhynchos,americanWhitePelican).
 	hasCommonName(pelecanus_occidentalis,brownPelican).
@@ -142,7 +164,7 @@ hasCommonName(plegadis,ibis).
 hasCommonName(platalea,spoonbill).
 	hasCommonName(platalea_ajaja,roseateSpoonbill).
 
-
+%Secondary commonName, no compound names allowed
 hasCommonName(pelecanus, erythrorhynchos, americanWhitePelican).
 hasCommonName(pelecanus, occidentalis, brownPelican).
 hasCommonName(botaurus, lentiginosus, americanBittern).
@@ -162,13 +184,14 @@ hasCommonName(plegadis, falcinellus, glossyIbis).
 hasCommonName(plegadis, chihi, whiteFacedIbis).
 hasCommonName(platalea, ajaja, roseateSpoonbill).
 
-
+%predicate which determines if there is a scientific name
 hasSciName(C, N):- hasCommonName(N,C).
 
+%predicate which determines if there is a compound name
 hasCompoundName(G, S, N):- genus(G), species(S), atom_concat(G,'_',A), atom_concat(A,S,N).
  
  
-
+%isaStrict limits the outputs to eliminate duplicates
 isaStrict(A, A) :- 	order(A);
     				family(A);
     				genus(A);
@@ -177,7 +200,7 @@ isaStrict(A, B) :-  hasParent2(A,B);
 					(hasParent2(A,C), isaStrict(C,B)).
                     
                     
-
+%isa determines the ancestry of  something
 isa(A,B) :- atom(A), atom(B), isaStrict(A,B);
             atom(A), atom(B), isaStrict(C,B), hasSciName(A,C);
             atom(A), atom(B), isaStrict(A,D), hasSciName(B,D);
@@ -188,17 +211,18 @@ isa(A,B) :- atom(A), atom(B), isaStrict(A,B);
             atom(B), var(A), isaStrict(A,B);
             var(A), var(B), isaStrict(A,B).
             
+%synonym predicate determines if any two names are equivalent
 synonym(A,B) :- hasCommonName(A,B), A\=B; 
                 hasCommonName(B,A), A\=B; 
                 hasCommonName(C,A),hasCommonName(C,B), A\=B.
 
                 
-                
+%countSpecies predicate determines the total number of species within order, family, etc.                
 countSpecies(A, N) :- \+order(A),\+family(A),\+genus(A), N=0.
 countSpecies(A, N) :- findall(B, isChild(A,B),C), sort(C,D), length(D,N).
 
 
- 
+%Additional predicate to do intermediate calculations 
 isChild(A,B) :- isaStrict(B,A), hasCompoundName(G,S,B).
 
 
